@@ -1,0 +1,33 @@
+{
+  "name": "diag-nose",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Houdhayfa/Diag-Nose.git"
+  },
+  "author": "Houdhayfa Ben Khlil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Houdhayfa/Diag-Nose/issues"
+  },
+  "homepage": "https://github.com/Houdhayfa/Diag-Nose#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "concurrently": "^5.3.0",
+    "config": "^3.3.2",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}

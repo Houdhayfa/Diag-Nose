@@ -5,6 +5,8 @@ const app=express()
 const port=process.env.PORT||5000
 const userRouter=require('./routes/user')
 const authRouter=require('./routes/auth')
+const profileRouter=require('./routes/profile')
+const adminRouter=require('./routes/admin')
 
 
 //middlewares
@@ -16,6 +18,8 @@ app.use(cors())
 
 app.use('/api/user',userRouter)
 app.use('/auth',authRouter)
+app.use('/profile',profileRouter)
+app.use('/admin',adminRouter)
 
 
 

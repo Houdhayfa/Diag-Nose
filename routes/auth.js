@@ -1,10 +1,12 @@
 const router=require('express').Router()
 const User=require('../models/User')
 const UserProfile=require('../models/UserProfile')
-const {registerValid,loginValid}=require('../data validation/inputValidators')
+const {registerValid,loginValid}=require('../middlewares/inputValidators')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
-
+const dotenv=require('dotenv')
+dotenv.config()
+const {authValidate}=require('../middlewares/authValidator')
 
 
 
@@ -40,7 +42,7 @@ router.post('/register', async (req,res) => {
     }
 })
 
-// register
+// login
 //@path http://localhost:5000/auth/login
 // public
 
@@ -48,14 +50,25 @@ router.post('/login', async (req,res) => {
     const logValidation=loginValid(req.body)
     const {email,password}=req.body
     try {
+        //input valid
         if (logValidation.error) throw (logValidation.error.details[0].message)
-        let user= await User.findOne({email})
+        //check mail
+        const user= await User.findOne({email})
         if (!user) throw ("mot de passe ou email n'est pas correct")
+        //check password
         let safePass= await bcrypt.compare(password,user.password)
         if (!safePass) throw("mot de passe ou email n'est pas correct")
+        //check suspension
         let isBlocked= user.isBlocked
         if (isBlocked) throw('Votre compte a été suspendu')
-        res.status(200).send(user)
+        // token
+        const payload={
+            _id:user._id,
+            isAdmin:user.isAdmin
+        }
+        const token=jwt.sign(payload,process.env.JWT_PASS)
+        console.log(token)
+        res.status(200).send({user,token})
     } 
     catch (error) {
         res.status(400).send(error)
@@ -63,7 +76,11 @@ router.post('/login', async (req,res) => {
     }
 })
 
-
+// test private route
+// @path http://localhost:5000/auth/me
+router.get('/me',authValidate , async (req,res) =>{
+res.send(req.user)
+})
 
 
 module.exports=router

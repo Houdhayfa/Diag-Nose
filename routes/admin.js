@@ -1,15 +1,15 @@
 const router=require('express').Router()
 const Joi=require('joi')
 const User=require('../models/User')
-const UserProfile=require('../models/UserProfile')
+const Demande=require('../models/Demande')
 const {adminValidate}=require('../middlewares/authValidator')
 
-/*  ##################################### User ########################################## */
+/*  ##################################### User operations ########################################## */
 
 // get all users
 //@path http://localhost:5000/admin/allUsers
 // private
-router.get('/allUsers', async (req,res) => {
+router.get('/allUsers',adminValidate, async (req,res) => {
    
     try {
         let allUsers= await User.find()
@@ -38,9 +38,9 @@ router.put('/block/:_id',adminValidate, async (req,res) => {
      }
  })
 
- // unblock user
+// unblock user
 // http://localhost:5000/admin/unblock/:id
-// private
+// private admin
 router.put('/unblock/:_id',adminValidate, async (req,res) => {
     const id=req.params._id
      try {
@@ -52,11 +52,11 @@ router.put('/unblock/:_id',adminValidate, async (req,res) => {
          console.log(error)
      }
  })
-/*  ##################################### admin ########################################## */
+/*  ##################################### admin operations ########################################## */
 
 // upgrade user to admin
 //@path http://localhost:5000/admin/addAdmin
-//private
+//private admin
 router.put('/addAdmin/:_id',adminValidate, async (req,res) => {
     const id=req.params._id
      try {
@@ -68,10 +68,6 @@ router.put('/addAdmin/:_id',adminValidate, async (req,res) => {
          console.log(error)
      }
  })
-
-
-
-
 
 
 

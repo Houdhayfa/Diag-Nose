@@ -7,9 +7,13 @@ const atelierSchema=new schema({
     phone:{
         type:Number,
         required:true},
-    adress:{
+    address:{
         type:String,
         required:true},
+    email:{
+        type:String,
+        required:true
+    },
     lat:{
         type:Number},
     lng:{

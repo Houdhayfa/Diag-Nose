@@ -20,7 +20,6 @@ const UserSchema=new schema({
     isAdmin:{
         type:Boolean,
         default:false},
-            
 
 })
 

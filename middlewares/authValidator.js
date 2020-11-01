@@ -6,12 +6,12 @@ const authValidate = async (req,res,next) =>{
 
 try {
     const token=req.headers["x-auth-token"]
-    if(!token) throw('Non Authorisé')
+    if(!token) throw('pas de token')
     const decoded= await jwt.verify(token,process.env.JWT_PASS)
     const user = await User.findById(decoded._id)
-    if(!user) throw('Non Authorisé')
+    if(!user) throw('c pas votre compte')
     let isBlocked= user.isBlocked
-        if (isBlocked) throw('Votre compte a été suspendu')
+    if (isBlocked) throw('Votre compte a été suspendu')
     req.user=user
     
     next()
@@ -30,6 +30,8 @@ const adminValidate = async (req,res,next) =>{
         const user = await User.findById(decoded._id)
         if(!user) throw('Non Authorisé')
         if(!user.isAdmin) throw('Non Authorisé')
+        let isBlocked= user.isBlocked
+        if(isBlocked) throw('Votre compte a été suspendu')
         req.user=user
         
         next()

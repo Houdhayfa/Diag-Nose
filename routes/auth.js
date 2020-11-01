@@ -34,7 +34,17 @@ router.post('/register', async (req,res) => {
         if (regValidation.error) throw (regValidation.error.details[0].message)
         await newUser.save()
         await newProfile.save()
-        res.send(newUser)
+        res.status(200).send(
+            {msg:"Compte ajouté",
+            user:{
+                _id:newUser._id,
+                name:newUser.name,
+                email:newUser.email,
+                phone:newUser.phone,
+                isAdmin:newUser.isAdmin,
+                isBlocked:newUser.isBlocked
+            }
+        })
     } 
     catch (error) {
         res.status(400).send(error)
@@ -68,7 +78,7 @@ router.post('/login', async (req,res) => {
         }
         const token=jwt.sign(payload,process.env.JWT_PASS)
         console.log(token)
-        res.status(200).send({user,token})
+        res.status(200).send({msg:"Vous êtes connecté",user,token})
     } 
     catch (error) {
         res.status(400).send(error)
@@ -77,9 +87,15 @@ router.post('/login', async (req,res) => {
 })
 
 // test private route
-// @path http://localhost:5000/auth/me
-router.get('/me',authValidate , async (req,res) =>{
-res.send(req.user)
+// @path http://localhost:5000/auth/getAuth
+router.get('/getAuth',authValidate , async (req,res) =>{
+    const {name,email,phone,_id,isAdmin,isBlocked}=req.user
+res.send({
+    user:{
+        name,email,phone,_id,isAdmin,isBlocked
+    },
+    msg:"Vous êtes connecté"
+})
 })
 
 

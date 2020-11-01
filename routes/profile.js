@@ -2,12 +2,12 @@ const router=require('express').Router()
 const Joi=require('joi')
 const User=require('../models/User')
 const UserProfile=require('../models/UserProfile')
-const {profileValidate}=require('../middlewares/authValidator')
+const {profileValidate,adminValidate}=require('../middlewares/authValidator')
 
 // get all profiles
 //@path http://localhost:5000/profile/all
-// private
-router.get('/all', async (req,res) => {
+// private admin
+router.get('/all',adminValidate, async (req,res) => {
    
     try {
         let allProfiles= await UserProfile.find()
@@ -38,13 +38,15 @@ router.get('/:_id',profileValidate, async (req,res) => {
 // edit profile
 // http://localhost:5000/profile/editProfile/:id
 // private
-router.put('/editProfile/:id',profileValidate, async (req,res) => {
+    router.put('/editProfile/:id',profileValidate, async (req,res) => {
     const id=req.params._id
     const {name,email,phone}=req.body
-    let updatedUser={name,email,phone}
+    const targetProfile=await UserProfile.findById(id)
+    const targetUser=await User.findById(targetProfile.user)
      try {
-         let blockedtUser= await User.findOneAndUpdate({_id:id},{$set:{name,email,phone}})
-         res.status(200).send(blockedtUser)
+         let updatedUser= await User.findOneAndUpdate({_id:targetUser._id},{$set:{name,email,phone}})
+         res.status(200).send({updatedUser:updatedUser,
+                               profile:targetProfile })
      } 
      catch (error) {
          res.status(500).send('SERVER FAILED TO FULLFILL REQUEST...')

@@ -1,5 +1,4 @@
-import { SET_LOADING } from '../const/actionTypes';
-import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER} from '../const/actionTypes'
+import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER,SET_LOADING} from '../const/actionTypes'
 
 const initState={
     token:localStorage.getItem('token'),

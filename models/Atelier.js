@@ -14,13 +14,14 @@ const atelierSchema=new schema({
         type:String,
         required:true
     },
-    lat:{
+    latitude:{
         type:Number},
-    lng:{
+    longitude:{
         type:Number},
     isPartner:{
         type:Boolean,
-        default:false}
+        default:false,
+        required:true}
             
 
 })

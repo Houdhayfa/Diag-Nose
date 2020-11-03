@@ -16,6 +16,7 @@ const dispatch=useDispatch()
   dispatch(loadUser())
   },[])
   return (
+    
     <BrowserRouter>
     <div className="App">
       <Switch>
@@ -28,7 +29,7 @@ const dispatch=useDispatch()
       </Switch>
     </div>
     </BrowserRouter>
-  );
+  )
 }
 
 export default App;

@@ -39,12 +39,15 @@ router.get('/:id', async (req,res) => {
 // private admin
 router.post('/add', adminValidate, async (req,res) => {
     const user=req.user // moula token
-   const {name,phone,email,address}=req.body
+   const {name,phone,email,address,latitude,longitude,isPartner}=req.body
    const newAtelier=new Atelier ({
        name:name,
        phone:phone,
        email:email,
-       address:address
+       latitude:latitude,
+       longitude:longitude,
+       isPartner:isPartner,
+       address:address,
    })
    
     try {

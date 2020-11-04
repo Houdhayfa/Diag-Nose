@@ -8,7 +8,7 @@ const {authValidate,adminValidate}= require('../middlewares/authValidator')
 router.get('/all', adminValidate, async (req,res) => {
     const allDemandes= await Demande.find()
      try {
-         res.status(200).send(allDemandes)
+         res.status(200).send({msg:"demandes trouvées",demande_all:allDemandes})
      } 
      catch (error) {
          res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
@@ -17,7 +17,7 @@ router.get('/all', adminValidate, async (req,res) => {
  })
 
 
-// get  demande
+// get  demande by id
 //@path http://localhost:5000/demande/:id
 // private user
 router.get('/:id', authValidate, async (req,res) => {
@@ -25,7 +25,7 @@ router.get('/:id', authValidate, async (req,res) => {
    
     const targetDemande= await Demande.findById(id)
      try {
-         res.status(200).send(targetDemande)
+         res.status(200).send({msg:"demande trouvée",demande:targetDemande})
      } 
      catch (error) {
          res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')

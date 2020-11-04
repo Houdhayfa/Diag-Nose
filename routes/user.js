@@ -2,6 +2,9 @@ const router=require('express').Router()
 const Joi=require('joi')
 const User=require('../models/User')
 const UserProfile=require('../models/UserProfile')
+const Demande=require('../models/Demande')
+const Reservation=require('../models/Reservation')
+
 const {authValidate}= require('../middlewares/authValidator')
 
 
@@ -51,6 +54,37 @@ router.put('/editUser/:_id',authValidate, async (req,res) => {
      } 
      catch (error) {
          res.status(500).send('SERVER FAILED TO FULLFILL REQUEST...')
+         console.log(error)
+     }
+ })
+
+ // get user demandes
+// http://localhost:5000/user/demande_all/:id
+// private
+router.get('/demande_all/:id',authValidate, async (req,res) => {
+    const id=req.params._id
+     try {
+         let demande_all= await Demande.find({user:id})
+         res.status(200).send({msg:"demandes trouvées",demandes:demande_all})
+         console/log(`all demandes:${demande_all}`)
+     } 
+     catch (error) {
+         res.status(500).send(error)
+         console.log("ERROR")
+     }
+ })
+ // get user reservations
+// http://localhost:5000/user/reservation_all/:id
+// private
+router.get('/reservation_all/:id', async (req,res) => {
+    const id=req.params._id
+     try {
+         let reservation_all= await Reservation.find({user:id})
+         res.status(200).send({msg:"reservations trouvées",reservations:reservation_all})
+         console/log(reservation_all)
+     } 
+     catch (error) {
+         res.status(500).send(error)
          console.log(error)
      }
  })

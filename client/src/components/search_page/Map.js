@@ -26,24 +26,20 @@ setRTLTextPlugin(
       height:'100vh'
     },
     avatar: {
+      
         backgroundColor: "orange",
         color:"black",
       },
       logoTextOrange:{
         color:"orange"
     },
-    userPosControl:{
-      
-    }
-
+   
   })
 
   /*############################ navigationController style ###################################*/
 const navStyle={position: 'absolute',
                 right: "50%",
-                top:"70vh",
-                display:"flex",
-                flexWrap:"noWrap"}
+                top:"70vh"}
   
  /*############################################## Function start ############################################*/
 
@@ -63,6 +59,7 @@ const navStyle={position: 'absolute',
 
   const  [shownPopup,setShownPopup]=useState({})
   const mapRef=useRef()
+  console.log(`Zoom: ${props.ic}`)
     return (
      <div className={classes.root} >
         <ReactMapGl 

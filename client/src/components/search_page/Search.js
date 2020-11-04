@@ -129,6 +129,7 @@ const  Search= (props) =>  {
         
        <Map mapboxApiAccessToken={mapboxApiAccessToken}
         {...viewport}
+        
         onViewportChange={(viewport) => {setViewport(viewport)}}
         mapStyle={"mapbox://styles/mightyghoul/ckgz98yxv24ok19pfz45cu67o"}
         setViewport={setViewport}

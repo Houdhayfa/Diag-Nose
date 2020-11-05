@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER, SET_LOADING} from '../const/actionTypes'
+import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER, SET_LOADING,EDIT_USER} from '../const/actionTypes'
 
 
 
@@ -79,4 +79,22 @@ export const logout =() => dispatch =>{
         type:LOGOUT_USER,
     })
     }
+    export const editUser = (user_id,Formdata) => async dispatch =>{
+        dispatch(setLoading())
+        try {
+            const response= await axios.put(`http://localhost:5000/user/editUser/${user_id}`,Formdata)
+            dispatch({
+                type:EDIT_USER,
+                payload:response.data.msg
+            })
+            dispatch(loadUser())
+        } 
+        catch (error) {
+            console.log(error)
+            dispatch({
+                type:AUTH_ERROR,
+    
+            })
+        }
+        }
   

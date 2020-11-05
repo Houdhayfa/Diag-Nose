@@ -1,4 +1,7 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
+import {useDispatch,useSelector} from 'react-redux'
+import {logout} from '../../Store/actions/authActions'
+import {getAllAteliers} from '../../Store/actions/AtelierActions'
 import {withRouter} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,11 +15,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+import SearchIcon from '@material-ui/icons/Search';
+import SettingsIcon from '@material-ui/icons/Settings';
 import AvatarWithBadge from './AvatarWithBadge'
 import Tabs from './Tabs'
+import ProfileModal from './ProfileModal'
 
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,9 +85,39 @@ ListItemParent: {
    }
 }));
 
+/*########################### Function start ##########################################*/
+
 const Profile=(props)=> {
+  
+ 
+  const dispatch=useDispatch()
+  /*########################### get all ateliers && load user #######################*/
+  useEffect(() =>{
+   dispatch(getAllAteliers())
+  })// parceque DemandeCard useffect est plus vite le state 
+  
   const classes = useStyles();
   const history=props.history
+
+  /*########################### Modal control #######################*/
+  const [isModalOpen,setOpenModal]=useState(false)
+  /*########################### Menu items control ##########################################*/
+
+const list=[
+  {text:"Deconnexion",
+      icon:<PersonAddDisabledIcon/>,
+      onClick: () => {dispatch(logout());
+                      history.push('/')}
+  },
+  {text:"Recherche",
+      icon:<SearchIcon/>,
+      onClick: () => history.push('/search')
+  },
+  {text:"Modifier mon profile",
+      icon:<SettingsIcon/>,
+      onClick: () => setOpenModal(true)
+  },
+]
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -110,24 +147,19 @@ const Profile=(props)=> {
         <div  />
         <Divider classes={{root: classes.dividerColor}} variant="middle"/>
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem className={classes.ListItemParent} button key={text}>
-              <ListItemIcon className={classes.menuicon} >{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+          {list.map((item, index) => {
+            const {text,icon,onClick}=item
+            return (
+            <ListItem className={classes.ListItemParent} button key={text} onClick={onClick}>
+              <ListItemIcon className={classes.menuicon} >{icon}</ListItemIcon>
               <ListItemText disableTypography className={classes.menutext} primary={text} />
             </ListItem>
-          ))}
+          )
+          })}
         </List>
-        <Divider classes={{root: classes.dividerColor}} variant="middle" />
-        <List>
-          {['All mail', 'thrash', 'Spam'].map((text, index) => (
-            <ListItem className={classes.ListItemParent} button key={text}>
-              <ListItemIcon className={classes.menuicon} >{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText disableTypography className={classes.menutext} primary={text} />
-            </ListItem>
-          ))}
-        </List>
+       
       </Drawer>
-      
+      <ProfileModal open={isModalOpen} setOpen={setOpenModal} />
     </div>
   );
 }

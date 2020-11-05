@@ -1,4 +1,4 @@
-import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER,SET_LOADING} from '../const/actionTypes'
+import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER,SET_LOADING,EDIT_USER} from '../const/actionTypes'
 
 const initState={
     token:localStorage.getItem('token'),
@@ -22,7 +22,9 @@ switch (type) {
         return {...state,isLoading:false,isAuth:true, user:payload.user,msg:payload.msg}
     case LOGOUT_USER:
         localStorage.removeItem("token")
-        return {...state,isAuth:false,msg:"Vous êtes déconnecté"}     
+        return {...state,isAuth:false,msg:"Vous êtes déconnecté"} 
+    case EDIT_USER:
+        return {...state,isLoding:false,msg:payload.msg}    
     default:
         return state;
 }

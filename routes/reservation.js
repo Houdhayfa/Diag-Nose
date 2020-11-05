@@ -10,7 +10,8 @@ const Atelier = require('../models/Atelier')
 router.get('/all', adminValidate, async (req,res) => {
     const allReservations= await Reservation.find()
      try {
-         res.status(200).send(allReservations)
+         res.status(200).send({msg:"reservations trouvées",
+                              reservations_all:allReservations})
      } 
      catch (error) {
          res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')

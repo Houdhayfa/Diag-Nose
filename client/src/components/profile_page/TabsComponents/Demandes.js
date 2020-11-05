@@ -1,20 +1,33 @@
 import React,{useState, useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import {getUserDemandes} from '../../../Store/actions/demandesActions'
+import { makeStyles } from '@material-ui/core/styles';
+
+import DemandeCard from './DemandesCard'
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
+
+
+/*########################## function start ########################*/
 
 function Demandes(props) {
-  const user=useSelector((state) => state.authReducer.user)
+  const classes = useStyles();
+  const {value,index}=props// tabs props
   const dispatch=useDispatch()
-  const [demandes,setDemandes]=useState()
-  console.log(user)
+  const user=useSelector((state) => state.authReducer.user)
   useEffect(()=> {
     dispatch(getUserDemandes(user._id))
-  })
-    const {value,index}=props
+  },[user])
+    const demandes=useSelector(((state)=>state.demandeReducer.demandes_user))
     return (
         <div>
           {value==index? (
-           <h1> Demandes</h1>
+            <DemandeCard demandes={demandes}/>
           ):null}  
         </div>
     )

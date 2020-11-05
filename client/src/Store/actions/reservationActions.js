@@ -4,7 +4,8 @@ import {GET_RESERVATION,
         ADD_RESERVATION,
         GET_ALL_RESERVATION,
         DELETE_RESERVATION,
-        UPDATE_RESERVATION} 
+        UPDATE_RESERVATION,
+        CONCLUDE_RESERVATION} 
         from '../const/actionTypes'
 
 import {setLoading} from './authActions'
@@ -15,20 +16,29 @@ export const getUserreservations= (user_id) => async dispatch =>{
     let result= await axios.get(`http://localhost:5000/user/reservation_all/${user_id}`)
     dispatch({
         type:GET_USER_RESERVATION,
-        payload:result.data.reservations
+        payload:{msg:result.data.msg,
+                 reservations_user:result.data.reservations}
     })
     }
-    
-    // export const getAllreservations= () => async dispatch => {
-    //     dispatch(setLoading())
+    export const concludeReservation= (demande_id) => async dispatch =>{
+        dispatch(setLoading())
         
-    //     let result= await axios.get(`http://localhost:5000/demande/all`)
-    //     dispatch({
-    //         type:GET_ALL_DEMANDE,
-    //         payload:{msg:result.data.msg,
-    //                  demande_all:result.data.demande_all}
-    //     })
-    //     }
+        let result= await axios.put(`http://localhost:5000/reservation/conclude/${demande_id}`)
+        dispatch({
+            type:CONCLUDE_RESERVATION,
+        })
+        dispatch(getAllreservations())
+        }
+    export const getAllreservations= () => async dispatch => {
+        dispatch(setLoading())
+        
+        let result= await axios.get(`http://localhost:5000/reservation/all`)
+        dispatch({
+            type:GET_ALL_RESERVATION,
+            payload:{msg:result.data.msg,
+                     reservations_all:result.data.reservations_all}
+        })
+        }
     
     // export const getDemandeById= (demande_id) => async dispatch =>{
     //     dispatch(setLoading())

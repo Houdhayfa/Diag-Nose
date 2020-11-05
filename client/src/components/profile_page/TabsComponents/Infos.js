@@ -1,11 +1,12 @@
 import React from 'react'
+import InfosCard from './InfosCard'
 
 function Infos(props) {
     const {value,index}=props
     return (
         <div>
           {value==index? (
-           <h1> Infos</h1>
+           <InfosCard/>
           ):null}  
         </div>
     )

@@ -23,7 +23,7 @@ export default function CustomizedSnackbars(props) {
         if (msg==="Compte ajouté") setOpen(true)
         if (msg==="Vous êtes connecté") setOpen(true)
         if (msg==="Vous êtes déconnecté") setOpen(true)
-        
+        if (msg==="Demande enregistrée") setOpen(true)
     },[msg])
 
     console.log(msg)

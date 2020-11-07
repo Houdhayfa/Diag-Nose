@@ -21,6 +21,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Avatar from '@material-ui/core/Avatar'
+import {Link as Scroll} from 'react-scroll'
 import Login from '../login_page/Login'
 import {logout} from '../../Store/actions/authActions'
 import '../landing_page/styles/Header.css'
@@ -56,7 +57,7 @@ const useStyles=makeStyles((theme) => ({
         display:"grid",
         placeItems:"center",
         height:"100vh",
-        paddingTop:"20%"
+        paddingTop:"25%"
        },
     appbar: {
      background:"none",
@@ -287,9 +288,11 @@ const menuItemList=MenuChanger(isUser,isAdmin)
                 
                 
                 <div>
+                  <Scroll to="bottom" smooth={true}>
                     <IconButton className={classes.ArrowContainer} elevation={2}>
                      <ExpandMoreIcon className={classes.downArrow}/>
                     </IconButton>
+                   </Scroll>
                 </div>
                 </Collapse>
             </div>

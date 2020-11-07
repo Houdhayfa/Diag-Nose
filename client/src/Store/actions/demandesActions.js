@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {setLoading} from './authActions'
-import {GET_USER_DEMANDE,GET_ALL_DEMANDE,GET_DEMANDE,ADD_DEMANDE,DELETE_DEMANDE,UPDATE_DEMANDE,SET_LOADING} from '../const/actionTypes'
+import {GET_USER_DEMANDE,GET_ALL_DEMANDE,GET_DEMANDE,DELETE_DEMANDE,UPDATE_DEMANDE,SET_LOADING,ADD_DEMANDE} from '../const/actionTypes'
 
 
 
@@ -109,6 +109,7 @@ export const editDemande = (demande_id) => async dispatch =>{
         console.log(error)
     }
     
-    }    
+    } 
+       
 
 

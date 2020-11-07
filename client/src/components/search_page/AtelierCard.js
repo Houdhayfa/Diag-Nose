@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React,{useState} from 'react';
+import {useSelector} from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider'
-
+import AddDemandeModal from './AddDemandeModal'
 const useStyles = makeStyles({
   root: {
     width:"100%",
@@ -39,10 +39,20 @@ const useStyles = makeStyles({
 });
 
 export default function AtelierCard(props) {
+  const isAuth=useSelector(state=> state.authReducer.isAuth)
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+
+  const handelClick=(e)=>{
+    e.stopPropagation();
+    props.setOpenModal(true);
+    console.log('reserver')
+  }
+
+  
 // console.log(props)
   return (
+    <div>
     <Card className={classes.root}>
       <CardContent>
         
@@ -75,8 +85,16 @@ export default function AtelierCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button className={classes.buttons} size="small">Reserver</Button>
+      <Button className={classes.buttons} size="small" onClick={handelClick}>
+      Reserver
+      </Button>
       </CardActions>
+        
+          
+        
+      
     </Card>
+    
+    </div>
   );
 }

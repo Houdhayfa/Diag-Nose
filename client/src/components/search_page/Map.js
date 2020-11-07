@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import {getAllAteliers} from '../../Store/actions/AtelierActions'
 import AtelierCard from './AtelierCard'
+import AddDemandeModal from './AddDemandeModal'
 import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
 
 const mapboxApiAccessToken=process.env.REACT_APP_MAPBOX_TOKEN
@@ -59,9 +60,14 @@ const navStyle={position: 'absolute',
 
   const  [shownPopup,setShownPopup]=useState({})
   const mapRef=useRef()
-  console.log(`Zoom: ${props.ic}`)
+  
+  /*########################## AdddemandeModal control ###################################*/
+  const [openModal,setOpenModal]=useState(false)
+  
     return (
      <div className={classes.root} >
+
+
         <ReactMapGl 
         ref={mapRef}
         {...props}
@@ -71,7 +77,8 @@ const navStyle={position: 'absolute',
              <>
             <Marker setShownPopup={setShownPopup} key={atelier._id}latitude={atelier.latitude} longitude={atelier.longitude} offsetLeft={-20} offsetTop={-30}>
                 <Avatar className={classes.avatar}>
-                <Button onClick={() => setShownPopup({[atelier._id]:true})}>
+                <Button onClick={e => { e.stopPropagation() 
+                                        setShownPopup({[atelier._id]:true})}}>
                 {atelier.isPartner?  <img 
                                     width="30px"height="30px"
                                     src={`${process.env.PUBLIC_URL}`+'/resources/pointer.svg'}
@@ -81,19 +88,27 @@ const navStyle={position: 'absolute',
             </Marker>
             {shownPopup[atelier._id]? (
               <Popup
+              
             anchor={"top"}
+            closeOnClick={false}
             closeButton={true}
             onClose={() => setShownPopup({[atelier._id]:false})}
             latitude={atelier.latitude} 
             longitude={atelier.longitude}
             offsetTop={10}>
               <AtelierCard
+              
+              setOpenModal={setOpenModal}
+              openModal={openModal}
               name={atelier.name}
               phone={atelier.phone}
               email={atelier.email}
               address={atelier.address}
+              
               />
+              
             </Popup>) : null}
+            <AddDemandeModal open={openModal} setOpen={setOpenModal} atelier_id={atelier._id}/>
             </>
            ))
             
@@ -104,6 +119,7 @@ const navStyle={position: 'absolute',
          
         </div>
         <Geocoder
+        position="fixed"
         mapboxApiAccessToken={mapboxApiAccessToken}
         mapRef={mapRef}
         label={"Ma position"}

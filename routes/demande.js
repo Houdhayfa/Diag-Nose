@@ -53,7 +53,7 @@ router.post('/add/:atelierId', authValidate, async (req,res) => {
         res.status(200).send({msg:"Demande enregistrée",user:user.name,demande:newDemande})
     } 
     catch (error) {
-        res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
+        res.status(500).send(error)
         console.log(error)
     }
 })

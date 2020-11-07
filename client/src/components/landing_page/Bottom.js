@@ -60,7 +60,7 @@ function Bottom(props) {
     const classes=useStyles()
     const history=props.history
     return (
-        <List className={classes.root}>
+        <List className={classes.root} id="bottom">
             <ListItem className={classes.bottomSection}>
                 <Typography className={classes.headLineLeft} variant="h5">Rechercher l'atelier le plus proche</Typography>
                 <div className={classes.buttonContainer}>

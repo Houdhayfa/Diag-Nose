@@ -14,13 +14,16 @@ export const ADD_ATELIER="ADD_ATELIER"
 export const GET_ALL_ATELIER="GET_ALL_ATELIER"
 export const DELETE_ATELIER="DELETE_ATELIER"
 export const UPDATE_ATELIER="UPDATE_ATELIER"
+export const MAKE_PARTNER="MAKE_PARTNER"
+export const UNMAKE_PARTNER="UNMAKE_PARTNER"
 
 /*################  USER ###############*/
 
 export const GET_USER="GET_USER"
 export const ADD_USER="ADD_USER"
 export const GET_ALL_USER="GET_ALL_USER"
-export const DELETE_USER="DELETE_USER"
+export const BLOCK_USER="BLOCK_USER"
+export const UNBLOCK_USER="UNBLOCK_USER"
 export const UPDATE_USER="UPDATE_USER"
 
 /*################  DEMANDES ###############*/

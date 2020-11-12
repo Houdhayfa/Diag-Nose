@@ -17,7 +17,7 @@ router.get('/all', async (req,res) => {
    
     try {
         let allUsers= await User.find()
-        res.status(200).send(allUsers)
+        res.status(200).send({msg:"tous les utilisateurs trouvés",All_Users:allUsers})
     } 
     catch (error) {
         res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
@@ -34,7 +34,8 @@ router.get('/:_id',authValidate, async (req,res) => {
    const id=req.params._id
     try {
         let targetUser= await User.findOne({_id:id})
-        res.status(200).send(targetUser)
+        res.status(200).send({msg:"utilisateur trouvé",
+                              targetUser:targetUser})
     } 
     catch (error) {
         res.status(500).send('SERVER FAILED TO FULLFILL REQUEST...')

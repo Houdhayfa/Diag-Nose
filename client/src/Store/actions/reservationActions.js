@@ -1,11 +1,5 @@
 import axios from 'axios'  
-import {GET_RESERVATION,
-        GET_USER_RESERVATION,
-        ADD_RESERVATION,
-        GET_ALL_RESERVATION,
-        DELETE_RESERVATION,
-        UPDATE_RESERVATION,
-        CONCLUDE_RESERVATION} 
+import {GET_USER_RESERVATION,GET_ALL_RESERVATION,CONCLUDE_RESERVATION,ADD_RESERVATION,DELETE_RESERVATION} 
         from '../const/actionTypes'
 
 import {setLoading} from './authActions'
@@ -20,12 +14,13 @@ export const getUserreservations= (user_id) => async dispatch =>{
                  reservations_user:result.data.reservations}
     })
     }
-    export const concludeReservation= (demande_id) => async dispatch =>{
+    export const concludeReservation= (reservation_id) => async dispatch =>{
         dispatch(setLoading())
         
-        let result= await axios.put(`http://localhost:5000/reservation/conclude/${demande_id}`)
+        let result= await axios.put(`http://localhost:5000/reservation/conclude/${reservation_id}`)
         dispatch({
             type:CONCLUDE_RESERVATION,
+            payload:{msg:result.data.msg}
         })
         dispatch(getAllreservations())
         }
@@ -39,7 +34,27 @@ export const getUserreservations= (user_id) => async dispatch =>{
                      reservations_all:result.data.reservations_all}
         })
         }
-    
+        export const addReservation= (demande_id,formdata) => async dispatch => {
+            dispatch(setLoading())
+            
+            let result= await axios.post(`http://localhost:5000/reservation/add/${demande_id}`,formdata)
+            dispatch({
+                type:ADD_RESERVATION,
+                payload:{msg:result.data.msg}
+            })
+            dispatch(getAllreservations())
+            }
+        
+        export const deleteReservation= (reservation_id) => async dispatch =>{
+            dispatch(setLoading())
+            
+            let result= await axios.delete(`http://localhost:5000/reservation/delete/${reservation_id}`)
+            dispatch({
+                type:DELETE_RESERVATION,
+                payload:{msg:result.data.msg}
+            })
+            dispatch(getAllreservations())
+            }
     // export const getDemandeById= (demande_id) => async dispatch =>{
     //     dispatch(setLoading())
         
@@ -60,16 +75,7 @@ export const getUserreservations= (user_id) => async dispatch =>{
     //                 demande:result.data.demande}
     //     })
     //     }
-    // export const deleteDemande= (demande_id) => async dispatch =>{
-    //     dispatch(setLoading())
-        
-    //     let result= await axios.delete(`http://localhost:5000/demande/delete/${demande_id}`)
-    //     dispatch({
-    //         type:DELETE_DEMANDE,
-    //         payload:{msg:result.data.msg,
-    //             demande:result.data.deleteDemande}
-    //     })
-    //     }
+   
     // export const editDemande = (demande_id) => async dispatch =>{
     //     dispatch(setLoading())
         

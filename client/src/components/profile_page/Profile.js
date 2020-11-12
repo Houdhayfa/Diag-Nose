@@ -115,7 +115,7 @@ const list=[
       icon:<SearchIcon/>,
       onClick: () => history.push('/search')
   },
-  {text:"Modifier mon profile",
+  {text:"Modifier mes infos",
       icon:<SettingsIcon/>,
       onClick: () => setOpenModal(true)
   },

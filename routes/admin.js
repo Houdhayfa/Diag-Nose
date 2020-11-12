@@ -13,7 +13,7 @@ router.get('/allUsers',adminValidate, async (req,res) => {
    
     try {
         let allUsers= await User.find()
-        res.status(200).send(allUsers)
+        res.status(200).send({msg:"tous les utilisateurs trouvés",All_Users:allUsers})
     } 
     catch (error) {
         res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
@@ -30,7 +30,8 @@ router.put('/block/:_id',adminValidate, async (req,res) => {
     const id=req.params._id
      try {
          let blockedtUser= await User.findOneAndUpdate({_id:id},{$set:{isBlocked:true}})
-         res.status(200).send(blockedtUser)
+         res.status(200).send({msg:"utilisateur bloqué",
+                               blockedtUser:blockedtUser})
      } 
      catch (error) {
          res.status(500).send('SERVER FAILED TO FULLFILL REQUEST...')
@@ -44,8 +45,9 @@ router.put('/block/:_id',adminValidate, async (req,res) => {
 router.put('/unblock/:_id',adminValidate, async (req,res) => {
     const id=req.params._id
      try {
-         let blockedtUser= await User.findOneAndUpdate({_id:id},{$set:{isBlocked:false}})
-         res.status(200).send(blockedtUser)
+         let unblockedtUser= await User.findOneAndUpdate({_id:id},{$set:{isBlocked:false}})
+         res.status(200).send({msg:"compte réactivé",
+                               unblockedtUser:unblockedtUser})
      } 
      catch (error) {
          res.status(500).send('SERVER FAILED TO FULLFILL REQUEST...')

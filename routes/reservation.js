@@ -74,7 +74,7 @@ router.delete('/delete/:id', adminValidate, async (req,res) => {
      try {
           const deletedReservation =await Reservation.findByIdAndDelete(id)
           if(!deletedReservation) throw ('Reservation non trouvée')
-         res.status(200).send({msg:"reservation supprimée",
+         res.status(200).send({msg:"Reservation supprimée",
                                deletedReservation:deletedReservation})
      } 
      catch (error) {

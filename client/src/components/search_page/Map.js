@@ -24,7 +24,7 @@ setRTLTextPlugin(
   const useStyle=makeStyles({
     root:{
       width:'100%',
-      height:'100vh'
+      height:'89vh'
     },
     avatar: {
       
@@ -77,7 +77,7 @@ const navStyle={position: 'absolute',
              <>
             <Marker setShownPopup={setShownPopup} key={atelier._id}latitude={atelier.latitude} longitude={atelier.longitude} offsetLeft={-20} offsetTop={-30}>
                 <Avatar className={classes.avatar}>
-                <Button onClick={e => { e.stopPropagation() 
+                <Button onClick={e => {  
                                         setShownPopup({[atelier._id]:true})}}>
                 {atelier.isPartner?  <img 
                                     width="30px"height="30px"
@@ -106,9 +106,9 @@ const navStyle={position: 'absolute',
               address={atelier.address}
               
               />
-              
+              <AddDemandeModal open={openModal} setOpen={setOpenModal} atelier_id={atelier._id}/>
             </Popup>) : null}
-            <AddDemandeModal open={openModal} setOpen={setOpenModal} atelier_id={atelier._id}/>
+            
             </>
            ))
             
@@ -118,18 +118,19 @@ const navStyle={position: 'absolute',
           <NavigationControl  />
          
         </div>
-        <Geocoder
-        position="fixed"
+        {/* <Geocoder
+        style={{position:"static"}}
         mapboxApiAccessToken={mapboxApiAccessToken}
         mapRef={mapRef}
-        label={"Ma position"}
+        label={"Chercher un lieux"}
         positionOptions={{enableHighAccuracy: true}}
         trackUserLocation={true}
         auto={true}
         onViewportChange={(viewport) => {viewport.zoom=12
                                         props.setViewport(viewport)}}
-        />
+        /> */}
         <GeolocateControl
+         style={{position:"static"}}
           label={"Ma position"}
           positionOptions={{enableHighAccuracy: true}}
           trackUserLocation={true}

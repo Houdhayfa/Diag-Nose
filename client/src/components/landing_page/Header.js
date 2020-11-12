@@ -187,7 +187,7 @@ const dispatch=useDispatch()
 
 const MenuChanger= (isUser,isAdmin) =>{
    const List=[
-    ,
+    
     {
         text:"Inscription",
         icon:<PersonAddIcon/>,
@@ -223,7 +223,7 @@ const setConnectionItem = (isUser) =>{
                onClick: () => history.push('/profile')});
     List.unshift(connectionItem)
 }
-  if (isAdmin) List.push({
+  if (isAdmin && isUser) List.push({
   text:"Admin",
   icon:<VisibilityIcon/>,
   onClick: () => history.push('/admin')

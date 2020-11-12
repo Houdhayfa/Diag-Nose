@@ -12,8 +12,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import Avatar from '@material-ui/core/Avatar'
 import PersonIcon from '@material-ui/icons/Person'
-import {editUser,loadUser} from '../../Store/actions/authActions'
-
+import {editAtelier, getTargetAtelier} from '../../../Store/actions/AtelierActions'
 
                   /*############### theme ################*/
 const useStyles = makeStyles((theme) => ({
@@ -54,27 +53,36 @@ const theme = createMuiTheme({
   /*###################### Function Start #############################*/
 
 
-const ProfileModal =(props) => {
+const EditAtelierModal =(props) => {
   const classes = useStyles();
   const history=props.history
 
 
   
   /*######################### Input control && initial state ############################*/
-  const user=useSelector(state=>state.authReducer.user)
+  const atelier_id=props.atelier_id
+  const targetAtelier=useSelector(state => state.atelierreducer.targetAtelier)
   useEffect(() => {
-    setInputName(user.name)
-    setInputEmail(user.email)
-    setInputPhone(user.phone)
-    setUser_id(user._id)
-},[user])
- 
+    dispatch(getTargetAtelier(atelier_id))
+},[atelier_id])
+
+  useEffect(() => {
+    setInputName(targetAtelier.name)
+    setInputEmail(targetAtelier.email)
+    setInputPhone(targetAtelier.phone)
+    setInputAddress(targetAtelier.address)
+    setInputLatitude(targetAtelier.latitude)
+    setInputLongitude(targetAtelier.longitude)
+},[targetAtelier])
+
   const [inputName,setInputName]=useState("user.name")
   const [inputEmail,setInputEmail]=useState("user.email")
   const [inputPhone,setInputPhone]=useState("user.phone")
-  const [user_id,setUser_id]=useState("user._id")
-
-  console.log(`user id:${user_id}`)
+  const [inputAddress,setInputAddress]=useState("user.address")
+  const [inputLatitude,setInputLatitude]=useState("user.latitude")
+  const [inputLongitude,setInputLongitude]=useState("user.longitude")
+  
+  console.log(`atelier modal id:${atelier_id}`)
   const handelEmailChange= (e) =>{
     setInputEmail(e.target.value)
   }
@@ -83,6 +91,15 @@ const ProfileModal =(props) => {
   }
   const handelPhoneChange= (e) =>{
     setInputPhone(e.target.value)
+  }
+  const handelAddressChange= (e) =>{
+    setInputAddress(e.target.value)
+  }
+  const handelLatitudeChange= (e) =>{
+    setInputLatitude(e.target.value)
+  }
+  const handelLongitudeChange= (e) =>{
+    setInputLongitude(e.target.value)
   }
   
    /*######################### Dispatch & Buttons ############################*/
@@ -95,15 +112,18 @@ const handelSubmit = () => {
     const formData={
         email:inputEmail,
         name:inputName,
-        phone:inputPhone
+        phone:inputPhone,
+        address:inputAddress,
+        latitude:inputLatitude,
+        longitude:inputLongitude
     }
-    dispatch(editUser(user_id,formData))
+    dispatch(editAtelier(atelier_id,formData))
     props.setOpen(false)
     
   };
   const handleRetour = () => {
     props.setOpen(false)
-    history.push('/profile') 
+    history.push('/admin/AdminAteliers') 
   };
   
   return (
@@ -113,7 +133,7 @@ const handelSubmit = () => {
          <Avatar className={classes.avatar}>
           <PersonIcon className={classes.avatarIcon} />
         </Avatar>
-        <DialogTitle className={classes.title} id="form-dialog-title">Modifier mes infos</DialogTitle>
+        <DialogTitle className={classes.title} id="form-dialog-title">{`Modifier ${targetAtelier.name}?`}</DialogTitle>
         </div>
         <DialogContent>
         <TextField
@@ -144,6 +164,33 @@ const handelSubmit = () => {
             value={inputPhone}
             onChange={handelPhoneChange}
           />
+           <TextField
+            margin="dense"
+            id="address"
+            label="Adresse"
+            type="text"
+            fullWidth
+            value={inputAddress}
+            onChange={handelAddressChange}
+          />
+           <TextField
+            margin="dense"
+            id="latitude"
+            label="Latitude"
+            type="number"
+            fullWidth
+            value={inputLatitude}
+            onChange={handelLatitudeChange}
+          />
+           <TextField
+            margin="dense"
+            id="longitude"
+            label="Longitude"
+            type="number"
+            fullWidth
+            value={inputLongitude}
+            onChange={handelLongitudeChange}
+          />
        
         </DialogContent>
         <DialogActions>
@@ -162,7 +209,7 @@ const handelSubmit = () => {
 function CustomStyles(props) {
     return (
       <ThemeProvider theme={theme}>
-        <ProfileModal {...props}/>
+        <EditAtelierModal {...props}/>
       </ThemeProvider>
     );
   }

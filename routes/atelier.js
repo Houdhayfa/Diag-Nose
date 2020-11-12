@@ -24,7 +24,7 @@ router.get('/:id', async (req,res) => {
    
     const targetAtelier= await Atelier.findById(id)
      try {
-         res.status(200).send(targetAtelier)
+         res.status(200).send({targetAtelier:targetAtelier})
      } 
      catch (error) {
          res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
@@ -86,6 +86,35 @@ router.put('/editAtelier/:id', adminValidate, async (req,res) => {
      try {
           const updatedAtelier =await Atelier.findOneAndUpdate({_id:id},{$set:{name,email,address,phone}})
          res.status(200).send({msg:"changements enregistrés",updatedAtelier:updatedAtelier})
+     } 
+     catch (error) {
+         res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
+         console.log(error)
+     }
+ })
+
+ // Make  Atelier partner
+//@path http://localhost:5000/atelier/makePartner/:id
+// private admin
+router.put('/makePartner/:id', adminValidate, async (req,res) => {
+    const id=req.params.id
+     try {
+          const updatedAtelier =await Atelier.findOneAndUpdate({_id:id},{$set:{isPartner:true}})
+         res.status(200).send({msg:"Atelier marqué comme partenaire",updatedAtelier:updatedAtelier})
+     } 
+     catch (error) {
+         res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
+         console.log(error)
+     }
+ })
+  // UnMake  Atelier partner
+//@path http://localhost:5000/atelier/unmakePartner/:id
+// private admin
+router.put('/unmakePartner/:id', adminValidate, async (req,res) => {
+    const id=req.params.id
+     try {
+          const updatedAtelier =await Atelier.findOneAndUpdate({_id:id},{$set:{isPartner:false}})
+         res.status(200).send({msg:"Partenaire supprimé",updatedAtelier:updatedAtelier})
      } 
      catch (error) {
          res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')

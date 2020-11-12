@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {setLoading} from './authActions'
-import {GET_USER_DEMANDE,GET_ALL_DEMANDE,GET_DEMANDE,DELETE_DEMANDE,UPDATE_DEMANDE,SET_LOADING,ADD_DEMANDE} from '../const/actionTypes'
+import {GET_USER_DEMANDE,GET_ALL_DEMANDE,GET_DEMANDE,DELETE_DEMANDE,UPDATE_DEMANDE,ADD_DEMANDE} from '../const/actionTypes'
 
 
 
@@ -89,7 +89,9 @@ export const deleteDemande= (demande_id) => async dispatch =>{
         payload:{msg:result.data.msg,
             demande:result.data.deleteDemande}
     })
-    } catch (error) {
+    dispatch(getAllDemandes())
+    } 
+    catch (error) {
         console.log(error)
     }
     

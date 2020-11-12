@@ -24,6 +24,12 @@ export default function CustomizedSnackbars(props) {
         if (msg==="Vous êtes connecté") setOpen(true)
         if (msg==="Vous êtes déconnecté") setOpen(true)
         if (msg==="Demande enregistrée") setOpen(true)
+        if (msg==="demande supprimée") setOpen(true)
+        if (msg==="utilisateur bloqué") setOpen(true)
+        if (msg==="compte réactivé") setOpen(true)
+        if (msg==="Reservation enregistrée") setOpen(true)
+        if (msg==="Reservation clôturée") setOpen(true)
+        if (msg==="Reservation supprimée") setOpen(true)
     },[msg])
 
     console.log(msg)

@@ -4,10 +4,9 @@ import './index.css';
 import App from './App';
 import {Provider} from 'react-redux'
 import store from './Store/store'
-import Tabs from './components/profile_page/Tabs'
-
 ReactDOM.render(
   <Provider store={store}>
+    
     <App/>
     </Provider>
   ,

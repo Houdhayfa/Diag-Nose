@@ -24,6 +24,7 @@ import LockIcon from '@material-ui/icons/Lock'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import SettingsIcon from '@material-ui/icons/Settings';
 import PeopleIcon from '@material-ui/icons/People'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 import AvatarWithBadge from '../profile_page/AvatarWithBadge'
 import AdminTable from './adminComponenets/AdminTable'
 import AdminReservations from './adminComponenets/AdminReservations'
@@ -32,7 +33,8 @@ import  EditAtelierModal from './adminComponenets/EditAtelierModal'
 import  AddReservationModal from './adminComponenets/AddReservationModal'
 import {deleteDemande} from '../../Store/actions/demandesActions'
 import {concludeReservation,deleteReservation } from '../../Store/actions/reservationActions'
-
+import AddAtelierModal from './adminComponenets/AddAtelierModal'
+import Toast from '../register_page/Toast'
 const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
@@ -126,6 +128,11 @@ const AdminPage=(props)=> {
   const classes = useStyles();
   const history=props.history
 
+/*####################### Add atelier modal control state #############################*/
+
+const [addAtelierOpen,setAddAtelierOpen]=useState(false)
+ /*################## Add atelier Toast ######################*/
+ const msg=useSelector(state=> state.atelierreducer.msg)
 
   /*########################### Menu items control ##########################################*/
 
@@ -146,6 +153,10 @@ const list=[
   {text:"Ateliers",
       icon:<img  width="25px" height="25px" src={`${process.env.PUBLIC_URL}/resources/Ateliers.svg`} />,
       onClick: () => history.push('/admin/AdminAteliers')
+  },
+  {text:"Ajouter atelier",
+      icon:<AddCircleIcon />,
+      onClick: () => {setAddAtelierOpen(true);history.push('/admin/addAtelier')}
   },
   {text:"Demandes",
       icon:<img  width="30px" height="30px" src={`${process.env.PUBLIC_URL}/resources/Demandes.png`}/>,
@@ -341,11 +352,14 @@ const reservationActions=[
       <main className={classes.content}>
         <div className={classes.toolbar} />
         
+       
 
         {/* ################### Routes  ###################### */}
       
         <Route exact path='/admin'>
-        
+        <Typography variant="h1" >
+        <h1 className={classes.logoText} style={{fontFamily:"Grandstander"}} ><span className={classes.logoTextOrange} >Admin</span>.Zone</h1>
+        </Typography>
       </Route>
       <Route path='/admin/AdminUsers'>
         <AdminTable title ="Utilisateurs" data={userData} columns={userColumns} actions={userActions} />
@@ -358,6 +372,9 @@ const reservationActions=[
       </Route>
       <Route path='/admin/AdminDemandes'>
         <AdminTable title ="Demandes" data={demandeData} columns={demandeColumns} actions={demandeActions} />
+      </Route>
+      <Route path='/admin/addAtelier'>
+        <AddAtelierModal open={addAtelierOpen} setOpen={setAddAtelierOpen} />
       </Route>
       
       </main>
@@ -389,6 +406,7 @@ const reservationActions=[
       </Drawer>
       <EditAtelierModal open={openEditAtelierModal} setOpen={setEditAtelierModal} atelier_id={EditAtelier_id} />
       <AddReservationModal open={openAddReservationModal} setOpen={setAddReservationModal} demande_id={targetDemande_id}/>
+      <Toast msg={msg} />
     </div>
   );
 }

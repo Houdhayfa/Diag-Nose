@@ -30,6 +30,7 @@ export default function CustomizedSnackbars(props) {
         if (msg==="Reservation enregistrée") setOpen(true)
         if (msg==="Reservation clôturée") setOpen(true)
         if (msg==="Reservation supprimée") setOpen(true)
+        if (msg==="Atelier enregistré") setOpen(true)
     },[msg])
 
     console.log(msg)

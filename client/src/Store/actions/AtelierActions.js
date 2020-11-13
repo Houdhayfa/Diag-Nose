@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {GET_ALL_ATELIER,SET_LOADING,MAKE_PARTNER,UNMAKE_PARTNER,GET_ATELIER,UPDATE_ATELIER} from '../const/actionTypes'
+import {GET_ALL_ATELIER,SET_LOADING,MAKE_PARTNER,UNMAKE_PARTNER,GET_ATELIER,UPDATE_ATELIER,ADD_ATELIER} from '../const/actionTypes'
 
 
 export const setLoading =() => dispatch =>{
@@ -67,6 +67,20 @@ export const editAtelier = (atelier_id,formData) => async dispatch =>{
         const response=await axios.put(`http://localhost:5000/atelier/editAtelier/${atelier_id}`,formData)
         dispatch({
             type:UPDATE_ATELIER,
+            payload:{msg:response.data.msg}
+        })
+        dispatch(getAllAteliers())
+    } 
+    catch (error) {
+        console.log(error)
+    }
+}
+
+export const addAtelier = (formData) => async dispatch =>{
+    try {
+        const response=await axios.post(`http://localhost:5000/atelier/add`,formData)
+        dispatch({
+            type:ADD_ATELIER,
             payload:{msg:response.data.msg}
         })
         dispatch(getAllAteliers())

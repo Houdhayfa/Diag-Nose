@@ -1,16 +1,21 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
+import React,{useEffect} from 'react'
+import {useSelector,useDispatch} from 'react-redux'
 import MaterialTable from 'material-table'
 import Toast from '../../register_page/Toast'
+import {resetMessage} from '../../../Store/actions/authActions'
 
+function AdminTable({data,columns,title,actions}) {
 
-function AdminUsers({data,columns,title,actions}) {
-
+/*############# Toast messages #################*/
     const userMessage=useSelector((state) => state.userReducer.msg)
     const reservationMessage=useSelector((state) => state.reservationReducer.msg)
     const demandeMessage=useSelector((state) => state.demandeReducer.msg)
+const dispatch=useDispatch()
+useEffect(() =>{
+dispatch(resetMessage())
+},[])
     return (
-        <div >
+        <div  >
             <MaterialTable title={title}
                            data={data} 
                            columns={columns}
@@ -21,7 +26,7 @@ function AdminUsers({data,columns,title,actions}) {
                                 backgroundColor: 'orange',
                                 color: '#FFF'
                             },
-                            actionsColumnIndex: -1}}
+                            actionsColumnIndex: -1}}//place les actions à gauche
                             localization={{ toolbar: { searchPlaceholder: 'Chercher' } }}// changer le placeholder
                             />
                             <Toast msg={userMessage}/>
@@ -33,4 +38,4 @@ function AdminUsers({data,columns,title,actions}) {
     )
 }
 
-export default AdminUsers
+export default AdminTable

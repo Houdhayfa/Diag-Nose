@@ -1,4 +1,4 @@
-import {GET_ATELIER,ADD_ATELIER,GET_ALL_ATELIER,UPDATE_ATELIER,SET_LOADING,MAKE_PARTNER,UNMAKE_PARTNER} from '../const/actionTypes'
+import {GET_ATELIER,ADD_ATELIER,GET_ALL_ATELIER,UPDATE_ATELIER,SET_LOADING,MAKE_PARTNER,UNMAKE_PARTNER,RESET_MESSAGE} from '../const/actionTypes'
 
 
 const initState={
@@ -24,6 +24,8 @@ export default function (state = initState , {type,payload}) {
         return {...state}
     case UNMAKE_PARTNER:
         return {...state}
+    case RESET_MESSAGE:
+    return {...state,msg:""}  
     default:
         return state;
 }

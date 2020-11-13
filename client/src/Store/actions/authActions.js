@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER, SET_LOADING,EDIT_USER} from '../const/actionTypes'
+import {LOGIN_USER,REGISTER,GET_AUTH_USER,AUTH_ERROR,LOGOUT_USER, SET_LOADING,EDIT_USER,RESET_ERROR,RESET_MESSAGE} from '../const/actionTypes'
 
 
 
@@ -25,9 +25,11 @@ try {
     })
 } 
 catch (error) {
-    console.log(error)
+    const err=error.response.data
+    console.log(err)
     dispatch({
         type:AUTH_ERROR,
+        payload:{err:err}
     })
 }
 }
@@ -42,10 +44,11 @@ export const login = (Formdata) => async dispatch =>{
         })
     } 
     catch (error) {
-        console.log(error)
+        const err=error.response.data
+        console.log(err)
         dispatch({
             type:AUTH_ERROR,
-
+            payload:{err:err}
         })
     }
     }
@@ -62,9 +65,7 @@ dispatch({
 } 
 catch (error) {
     console.log(error)
-    dispatch({
-        type:AUTH_ERROR,
-    })  
+   
 }
 
 }
@@ -91,10 +92,33 @@ export const logout =() => dispatch =>{
         } 
         catch (error) {
             console.log(error)
+           
+        }
+        }
+    export const resetError = () => async dispatch =>{
+        
+        try {
             dispatch({
-                type:AUTH_ERROR,
-    
+                type:RESET_ERROR,
             })
+            
+        } 
+        catch (error) {
+            console.log(error)
+            
+        }
+        }
+    export const resetMessage = () => async dispatch =>{
+       
+        try {
+            dispatch({
+                type:RESET_MESSAGE,
+            })
+            
+        } 
+        catch (error) {
+            console.log(error)
+            
         }
         }
   

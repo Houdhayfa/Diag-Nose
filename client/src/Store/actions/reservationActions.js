@@ -1,5 +1,5 @@
 import axios from 'axios'  
-import {GET_USER_RESERVATION,GET_ALL_RESERVATION,CONCLUDE_RESERVATION,ADD_RESERVATION,DELETE_RESERVATION} 
+import {GET_USER_RESERVATION,GET_ALL_RESERVATION,CONCLUDE_RESERVATION,ADD_RESERVATION,DELETE_RESERVATION,REACTIVATE_RESERVATION} 
         from '../const/actionTypes'
 
 import {setLoading} from './authActions'
@@ -20,6 +20,16 @@ export const getUserreservations= (user_id) => async dispatch =>{
         let result= await axios.put(`http://localhost:5000/reservation/conclude/${reservation_id}`)
         dispatch({
             type:CONCLUDE_RESERVATION,
+            payload:{msg:result.data.msg}
+        })
+        dispatch(getAllreservations())
+        }
+    export const reactivateReservation= (reservation_id) => async dispatch =>{
+        dispatch(setLoading())
+        
+        let result= await axios.put(`http://localhost:5000/reservation/reactivate/${reservation_id}`)
+        dispatch({
+            type:REACTIVATE_RESERVATION,
             payload:{msg:result.data.msg}
         })
         dispatch(getAllreservations())

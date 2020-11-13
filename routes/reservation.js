@@ -116,4 +116,20 @@ router.put('/conclude/:id', adminValidate, async (req,res) => {
      }
  })
 
+  // reactivate  reservation
+//@path http://localhost:5000/reservation/reactivate/:id
+// private admin
+router.put('/reactivate/:id', adminValidate, async (req,res) => {
+    const id=req.params.id
+     try {
+          const updatedReservation =await Reservation.findOneAndUpdate({_id:id},{$set:{isConcluded:false}})
+         res.status(200).send({msg:"Reservation réactivée",
+                            ConcludedReservation:updatedReservation})
+     } 
+     catch (error) {
+         res.status(500).send('ERROR:SERVER FAILED TO FULLFILL YOUR REQUEST...')
+         console.log(error)
+     }
+ })
+
 module.exports=router

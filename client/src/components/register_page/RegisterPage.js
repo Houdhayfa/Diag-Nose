@@ -1,10 +1,12 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import {useDispatch} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Register from './Register'
+import {resetError,resetMessage} from '../../Store/actions/authActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +41,13 @@ logoContainer:{
 }));
 
 const RegisterPage=(props)=> {
+const dispatch=useDispatch()
+  useEffect(()=>{
+dispatch(resetError())
+  },[])
+  useEffect(()=>{
+    dispatch(resetMessage())
+},[])
   const classes = useStyles();
   const history=props.history
   return (

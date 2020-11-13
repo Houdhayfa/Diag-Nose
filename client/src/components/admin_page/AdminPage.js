@@ -27,12 +27,12 @@ import PeopleIcon from '@material-ui/icons/People'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import AvatarWithBadge from '../profile_page/AvatarWithBadge'
 import AdminTable from './adminComponenets/AdminTable'
-import AdminReservations from './adminComponenets/AdminReservations'
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 import {blockUser,unblockUser} from '../../Store/actions/userActions'
 import  EditAtelierModal from './adminComponenets/EditAtelierModal'
 import  AddReservationModal from './adminComponenets/AddReservationModal'
 import {deleteDemande} from '../../Store/actions/demandesActions'
-import {concludeReservation,deleteReservation } from '../../Store/actions/reservationActions'
+import {concludeReservation,deleteReservation,reactivateReservation} from '../../Store/actions/reservationActions'
 import AddAtelierModal from './adminComponenets/AddAtelierModal'
 import Toast from '../register_page/Toast'
 const drawerWidth = 200;
@@ -60,9 +60,11 @@ const useStyles = makeStyles((theme) => ({
     
 },
   toolbar: theme.mixins.toolbar,
+
   content: {
     display:"grid",
     height:"100vh",
+    width:"80vw",
     flexGrow: 1,
     padding: theme.spacing(3),
   },
@@ -112,11 +114,12 @@ const AdminPage=(props)=> {
    
   },[])
   useEffect(() =>{
-    dispatch(getAllAteliers())
-  },[])
-  useEffect(() =>{
     dispatch(getAllUsers())
   },[])
+  useEffect(() =>{
+    dispatch(getAllAteliers())
+  },[])
+  
   useEffect(() =>{
     dispatch(getAllDemandes())
   },[])
@@ -278,13 +281,14 @@ const demandeData=stateDemande.map((demande)=>{
          id:demande._id
     }
     })
-    
+    const cell= {width: 250,minWidth: 250}
+    const header= {width: 250,minWidth: 250}
     const demandeColumns=[
         {title:'Client',field:'user_name'},
         {title:'Date',field:'date'},
         {title:'Atelier',field:'atelier_name'},
         {title:'Marque ',field:'marque'},
-        {title:'Description de la panne',field:'description'},
+        {title:'Description de la panne',field:'description',cellStyle:cell,headerStyle:header},
 
     ]
 const demandeActions=[
@@ -328,14 +332,19 @@ const reservationData=stateReservations.map((reservation)=>{
 
     ]
 const reservationActions=[
+
+  {icon:() => <img width="35px"height="35px"src={`${process.env.PUBLIC_URL}`+'/resources/conclude.png'}/>,
+    tooltip:'Clôturer',
+    onClick: (event,rowData) => { dispatch(concludeReservation(rowData.id))}
+   },
+   {icon:() => <AutorenewIcon/>,
+    tooltip:'Réactiver',
+    onClick: (event,rowData) => { dispatch(reactivateReservation(rowData.id))}
+   },
   {icon:'delete',
    tooltip:'supprimer',
    onClick: (event,rowData) => { dispatch(deleteReservation(rowData.id))}
   },
-  {icon:() => <img width="35px"height="35px"src={`${process.env.PUBLIC_URL}`+'/resources/conclude.png'}/>,
-    tooltip:'Clôturer',
-    onClick: (event,rowData) => { dispatch(concludeReservation(rowData.id))}
-   }
 ]
 
   return (

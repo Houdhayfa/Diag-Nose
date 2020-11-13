@@ -1,8 +1,9 @@
-import {GET_USER,GET_ALL_USER,BLOCK_USER,UNBLOCK_USER} from '../const/actionTypes'
+import {GET_USER,GET_ALL_USER,BLOCK_USER,UNBLOCK_USER,RESET_MESSAGE} from '../const/actionTypes'
 
 const initState={
     targetUser:{},
     All_Users:[],
+    error:"",
     msg:""
 }
  const userReducer =(state=initState,{type,payload}) =>{
@@ -15,6 +16,8 @@ const initState={
             return {...state,msg:payload.msg};
         case UNBLOCK_USER:
             return {...state,msg:payload.msg}; 
+        case RESET_MESSAGE:
+            return {...state,msg:""}  
         default:
             return state;
     }

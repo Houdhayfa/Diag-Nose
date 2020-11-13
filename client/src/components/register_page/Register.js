@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles,ThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 import {orange} from '@material-ui/core/colors'
 import Toast from './Toast'
+import ErrorToast from './ErrorToast'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -102,11 +103,12 @@ const handelConfirm= (e) =>{
     phone:phoneInput,
     password:passwordInput
   }))
+  
 }
 
 /*######################### Toast ###########################*/
 const message=useSelector((state) => state.authReducer.msg)
-console.log(`message: ${message}`)
+const errMessage=useSelector(state => state.authReducer.err)
 const dispatch=useDispatch()
 
 return (
@@ -185,6 +187,7 @@ return (
       </div>
     </Grid>
     <Toast msg={message}/>
+    <ErrorToast msg={errMessage} />
   </Grid>
   
     

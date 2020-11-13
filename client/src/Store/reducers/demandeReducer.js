@@ -1,8 +1,9 @@
-import {GET_USER_DEMANDE,ADD_DEMANDE,GET_ALL_DEMANDE,DELETE_DEMANDE} from '../const/actionTypes'
+import {GET_USER_DEMANDE,ADD_DEMANDE,GET_ALL_DEMANDE,DELETE_DEMANDE,RESET_MESSAGE} from '../const/actionTypes'
 
 const initState={
     demandes_all:[],
     demandes_user:[],
+    error:"",
     msg:""
 }
 
@@ -16,7 +17,9 @@ export default function (state=initState,{type,payload}){
         case GET_ALL_DEMANDE:
             return {...state,demandes_all:payload.demande_all} 
         case DELETE_DEMANDE:
-            return {...state,msg:payload.msg}  
+            return {...state,msg:payload.msg}
+        case RESET_MESSAGE:
+            return {...state,msg:""}   
         default:
             return state;
     }
